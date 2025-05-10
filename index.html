@@ -3,29 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Telegram Mini App</title>
+  <title>Amazing Store</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <div class="post">
-    <div class="post-header">
-      <div class="profile-pic"></div>
-      <div class="post-info">
-        <div class="channel-name">Amazing Store · <span class="time">14:25</span></div>
-        <div class="post-title">🔌 Elektr choynak Xiaomi</div>
-      </div>
-    </div>
-    <img src="https://via.placeholder.com/400x200" alt="Mahsulot rasmi" class="post-image" />
-    <div class="post-description">
-      🔋 Quvvati: 1800W<br />
-      💧 Hajmi: 1.7L<br />
-      🌡️ Avtomatik o'chirish tizimi
-    </div>
-    <div class="post-footer">
-      <div class="reactions">👍 124 &nbsp;&nbsp; 💬 17</div>
-      <a class="main-btn" href="https://t.me/YourChannelUsername">Bosh menyuga qaytish</a>
-    </div>
+  <div class="app-container">
+    <h2 id="category-title">Kategoriya</h2>
+    <div id="product-list"></div>
+    <button id="back-button">🔙 Kanalga qaytish</button>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
