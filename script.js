@@ -24,8 +24,8 @@ const products = {
 };
 
 function getCategoryFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('category');
+  const tg = window.Telegram.WebApp;
+  return tg.initDataUnsafe?.start_param || 'oyinchoqlar';
 }
 
 function loadProducts() {
