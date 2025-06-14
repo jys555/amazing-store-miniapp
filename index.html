@@ -3,40 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Amazing Store Mini App</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    .active-tab { @apply border-b-2 border-blue-500 font-semibold; }
-    .modal { @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden; }
-  </style>
+  <title>Amazing Store - Marketplace</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="bg-gray-100 text-gray-900">
-  <!-- Tabs -->
-  <div class="flex justify-around p-4 bg-white shadow-md">
-    <button id="tab-home" class="tab-btn">Asosiy</button>
-    <button id="tab-category" class="tab-btn">Kategoriyalar</button>
-    <button id="tab-favorites" class="tab-btn">Sevimlilar</button>
+<body>
+  <div id="app">
+    <!-- Yuqori qism -->
+    <header class="top-bar">
+      <div class="location">📍 Toshkent</div>
+      <div class="logo">Amazing Market</div>
+    </header>
+
+    <!-- Qidiruv -->
+    <div class="search-bar">
+      <input type="text" placeholder="Tovarlarni topish" id="searchInput" />
+    </div>
+
+    <!-- Banner -->
+    <div class="banner">
+      <img src="https://via.placeholder.com/350x100?text=BANNER" alt="Banner" />
+    </div>
+
+    <!-- Sahifalar -->
+    <main id="main-content">
+      <!-- JS orqali to‘ldiriladi -->
+    </main>
+
+    <!-- Pastki menyu -->
+    <nav class="bottom-nav">
+      <button id="homeBtn" class="active">🏠</button>
+      <button id="categoriesBtn">📁</button>
+      <button id="favoritesBtn">❤️</button>
+    </nav>
   </div>
 
-  <!-- Pages -->
-  <div id="page-home" class="page p-4"></div>
-  <div id="page-category" class="page hidden p-4"></div>
-  <div id="page-favorites" class="page hidden p-4"></div>
-
-  <!-- Mahsulot Modal -->
-  <div id="product-modal" class="modal">
-    <div class="bg-white rounded-lg w-11/12 md:w-1/2 p-4 relative">
-      <button id="close-modal" class="absolute top-2 right-2 text-xl">&times;</button>
-      <img id="modal-img" class="w-full rounded mb-4" src="" alt="Mahsulot" />
-      <h2 id="modal-title" class="text-lg font-bold mb-1"></h2>
-      <p id="modal-price" class="text-red-600 text-lg mb-1"></p>
-      <p id="modal-old-price" class="line-through text-sm text-gray-500 mb-2"></p>
-      <p id="modal-desc" class="text-sm mb-4"></p>
-      <a id="modal-link" href="#" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded">Sotib olish</a>
+  <!-- Modal mahsulot sahifasi -->
+  <div id="productModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">←</span>
+      <div id="modalContent"></div>
     </div>
   </div>
 
+  <script src="products.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
+
