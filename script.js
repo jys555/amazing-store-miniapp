@@ -1,59 +1,125 @@
-const products = {
-  "oyinchoqlar": [
-    {
-      name: "Yumshoq ayiqcha",
-      price: "99,000 so‘m",
-      image: "https://example.com/ayiqcha.jpg",
-      link: "https://market.yandex.ru/product/ayiqcha"
-    },
-    {
-      name: "LEGO to‘plami",
-      price: "299,000 so‘m",
-      image: "https://example.com/lego.jpg",
-      link: "https://market.yandex.ru/product/lego"
-    }
-  ],
-  "texnika": [
-    {
-      name: "Changyutgich",
-      price: "799,000 so‘m",
-      image: "https://example.com/changyutgich.jpg",
-      link: "https://market.yandex.ru/product/changyutgich"
-    }
-  ]
-};
+const main = document.getElementById("main-content");
+const homeBtn = document.getElementById("homeBtn");
+const categoriesBtn = document.getElementById("categoriesBtn");
+const favoritesBtn = document.getElementById("favoritesBtn");
+const searchInput = document.getElementById("searchInput");
 
-function getCategoryFromURL() {
-  const tg = window.Telegram.WebApp;
-  return tg.initDataUnsafe?.start_param || 'oyinchoqlar';
-}
+const productModal = document.getElementById("productModal");
+const modalContent = document.getElementById("modalContent");
+const closeModal = document.getElementById("closeModal");
 
-function loadProducts() {
-  const category = getCategoryFromURL();
-  const listContainer = document.getElementById('product-list');
-  const title = document.getElementById('category-title');
-  
-  if (!category || !products[category]) {
-    title.innerText = "Kategoriya topilmadi";
-    return;
-  }
+let favorites = [];
 
-  title.innerText = category[0].toUpperCase() + category.slice(1);
-  products[category].forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'product-card';
+function renderProducts(filter = "") {
+  main.innerHTML = "";
+  const filtered = products.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()));
+  filtered.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "card";
     card.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" />
-      <h3>${item.name}</h3>
-      <p>${item.price}</p>
-      <a href="${item.link}" target="_blank">🛒 Xarid qilish</a>
+      <img src="${product.image}" />
+      <div class="title">${product.title}</div>
+      <div class="price">${product.price}</div>
     `;
-    listContainer.appendChild(card);
+    card.onclick = () => openProductModal(product);
+    main.appendChild(card);
   });
 }
 
-document.getElementById('back-button').addEventListener('click', () => {
-  Telegram.WebApp.close();
-});
+function renderCategories() {
+  const cats = [...new Set(products.map(p => p.category))];
+  main.innerHTML = "";
+  cats.forEach(cat => {
+    const div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<div class="title">${cat}</div>`;
+    div.onclick = () => renderProductsByCategory(cat);
+    main.appendChild(div);
+  });
+}
 
-loadProducts();
+function renderProductsByCategory(category) {
+  const filtered = products.filter(p => p.category === category);
+  main.innerHTML = "";
+  filtered.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${product.image}" />
+      <div class="title">${product.title}</div>
+      <div class="price">${product.price}</div>
+    `;
+    card.onclick = () => openProductModal(product);
+    main.appendChild(card);
+  });
+}
+
+function renderFavorites() {
+  const liked = products.filter(p => favorites.includes(p.id));
+  main.innerHTML = "";
+  if (liked.length === 0) {
+    main.innerHTML = "<p style='text-align:center;padding:20px;'>Sevimlilarda mahsulot yo‘q</p>";
+    return;
+  }
+  liked.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${product.image}" />
+      <div class="title">${product.title}</div>
+      <div class="price">${product.price}</div>
+    `;
+    card.onclick = () => openProductModal(product);
+    main.appendChild(card);
+  });
+}
+
+function openProductModal(product) {
+  modalContent.innerHTML = `
+    <img src="${product.image}" style="width:100%;border-radius:10px;" />
+    <h2>${product.title}</h2>
+    <p>${product.price}</p>
+    <button onclick="toggleFavorite(${product.id})">
+      ${favorites.includes(product.id) ? "❤️ Yoqdi" : "🤍 Yoqtirish"}
+    </button>
+  `;
+  productModal.classList.remove("hidden");
+}
+
+function toggleFavorite(productId) {
+  if (favorites.includes(productId)) {
+    favorites = favorites.filter(id => id !== productId);
+  } else {
+    favorites.push(productId);
+  }
+  productModal.classList.add("hidden");
+  renderFavorites();
+}
+
+closeModal.onclick = () => {
+  productModal.classList.add("hidden");
+};
+
+// Eventlar
+homeBtn.onclick = () => {
+  setActive(homeBtn);
+  renderProducts();
+};
+categoriesBtn.onclick = () => {
+  setActive(categoriesBtn);
+  renderCategories();
+};
+favoritesBtn.onclick = () => {
+  setActive(favoritesBtn);
+  renderFavorites();
+};
+searchInput.oninput = (e) => {
+  renderProducts(e.target.value);
+};
+
+function setActive(button) {
+  [homeBtn, categoriesBtn, favoritesBtn].forEach(btn => btn.classList.remove("active"));
+  button.classList.add("active");
+}
+
+renderProducts(); // boshlanishida asosiy sahifa
