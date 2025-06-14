@@ -1,43 +1,116 @@
 body {
-  font-family: sans-serif;
-  background-color: var(--tg-theme-bg-color, #fff);
-  color: var(--tg-theme-text-color, #000);
   margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+}
+
+.top-bar {
+  background: white;
   padding: 10px;
-}
-
-.app-container {
-  max-width: 500px;
-  margin: auto;
-}
-
-#product-list {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.product-card {
-  border: 1px solid #ddd;
-  border-radius: 10px;
+.logo {
+  font-weight: bold;
+}
+
+.search-bar {
   padding: 10px;
-  background-color: var(--tg-theme-secondary-bg-color, #f9f9f9);
-  text-align: center;
+  background: white;
+  border-bottom: 1px solid #ddd;
 }
 
-.product-card img {
+.search-bar input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  font-size: 22px;
+}
+
+.bottom-nav .active {
+  color: blue;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  margin: 10px;
+}
+
+.card img {
   width: 100%;
   border-radius: 8px;
 }
 
-button {
-  margin-top: 20px;
-  padding: 10px 15px;
-  font-size: 16px;
-  width: 100%;
-  border: none;
-  border-radius: 6px;
-  background-color: #0088cc;
-  color: #fff;
+.card .title {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.card .price {
+  color: green;
+  margin-top: 5px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  width: 90%;
+  padding: 20px;
+  border-radius: 10px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.close-btn {
+  font-size: 24px;
   cursor: pointer;
+  display: block;
+  margin-bottom: 10px;
 }
